@@ -2,3 +2,7 @@
 -/.git
 -/.lein-repl-history
 -/.nrepl-port
+-\target
+-\.git
+-\.lein-repl-history
+-\.nrepl-port

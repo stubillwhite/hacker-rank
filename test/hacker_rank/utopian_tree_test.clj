@@ -8,7 +8,8 @@
 
 (defn- simulate-input
   ([args]
-    (str (join "\n" args) "\nexit\n")))
+    (let [cr (System/lineSeparator)]
+      (str (join cr args) cr "exit" cr))))
 
 (defn- execute-with-input
   ([& args]
@@ -18,7 +19,8 @@
 
 (defn- output
   ([& args]
-    (str (join "\n" args) "\n")))
+    (let [cr (System/lineSeparator)]
+      (str (join cr args) cr))))
 
 (fact
   "execute given sample input then expected output."

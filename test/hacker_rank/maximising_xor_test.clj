@@ -8,8 +8,7 @@
 
 (defn- simulate-input
   ([args]
-    (let [cr (System/lineSeparator)]
-      (str (join cr args) cr))))
+    (apply str (replace {:enter (System/lineSeparator)} args))))
 
 (defn- execute-with-input
   ([& args]
@@ -24,4 +23,4 @@
 
 (fact
   "execute given sample input then expected output."
-  (execute-with-input 10 15) => (output 7))
+  (execute-with-input 10 :enter 15 :enter) => (output 7))

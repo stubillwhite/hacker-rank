@@ -1,4 +1,6 @@
-(ns hacker-rank.coin-change)
+(ns hacker-rank.coin-change
+  (:require
+    [clojure.string :refer [split]]))
 
 ;; Problem Statement
 ;; 
@@ -81,17 +83,73 @@
   ([]
     (line-seq (clojure.java.io/reader *in*))))
 
-(defn count-change
-  ([amount coins]
-    (cond
-      (zero? amount) 0
-      (empty? coins) 0)))
+(declare count-change)
+
+(defn to-ints
+  ([s]
+    (if (empty? s)
+      []
+      (map (fn [x] (Long/valueOf x)) (split s #" ")))))
 
 (defn- parse-input
   ([args]
-    (map (fn [x] (Long/valueOf x)) args)))
+    [ (first  (to-ints (first args)))
+      (to-ints (fnext args)) ]))
 
 (defn execute
   ([]
     (let [args (parse-input (from-stdin))]
-      (println 0))))
+      (println (apply count-change args)))))
+
+;; Simple recursive solution first
+
+(defn- recursive-count-change
+  ([amount coins]
+    (cond
+      (zero? amount) 1
+      (empty? coins) 0      
+      (< amount 0)   0
+      :else (+
+              (recursive-count-change (- amount (first coins)) coins)
+              (recursive-count-change amount (rest coins))))))
+
+(defn- count-change
+  ([amount coins]
+    (recursive-count-change amount (sort coins))))
+
+;; The problem states that recursion isn't sufficient to pass all test cases, so we need to memoize the calculation. We
+;; could just use Clojure's built-in memoization but that feels like cheating so we'll do it manually.
+
+(defn- all-amounts-and-coins
+  ([amount coins]
+    (let  [ all-amounts (range (inc amount))
+            all-coins   (for [n (range (inc (count coins)))] (take n coins)) ]
+      (for [ amount all-amounts
+             coins  all-coins ] [amount coins]))))
+
+(defn- tabulate-iter
+  ([acc [amount coins]]
+    (assoc acc [amount coins]
+      (cond
+        (zero? amount) 1
+        (empty? coins) 0
+        :else          (let [ remove-coin   (fn [coin coins] (remove #(= coin %) coins))
+                              largest       (last coins) ]
+                         (if (> largest amount)
+                           (get acc [amount (remove-coin largest coins)])
+                           (+
+                             (get acc [(- amount largest) coins])
+                             (get acc [amount (remove-coin largest coins)]))))))))
+
+(defn- tabulate
+  ([amount coins]
+    (reduce
+      tabulate-iter
+      {}
+      (all-amounts-and-coins amount coins))))
+
+(defn count-change
+  ([amount coins]
+    (let [ coins     (sort coins)
+           solutions (tabulate amount coins) ]
+      (get solutions [amount coins]))))

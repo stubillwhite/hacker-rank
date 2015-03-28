@@ -153,3 +153,5 @@
     (let [ coins     (sort coins)
            solutions (tabulate amount coins) ]
       (get solutions [amount coins]))))
+
+(comment execute)

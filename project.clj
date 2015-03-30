@@ -9,7 +9,9 @@
 
   :repl-options { :port 4555 }
 
-  :plugins []
+  :plugins [ [cider/cider-nrepl "0.8.2"]
+             [lein-expectations "0.0.7"]
+             [lein-autoexpect "1.4.0"] ]
   
   :dependencies [
                   ;; Core
@@ -24,5 +26,6 @@
                   ;; Testing
                   [midje "1.6.3"] ]
   
-  :profiles { :dev { :dependencies [[org.clojure/tools.namespace "0.2.10"]]
+  :profiles { :dev { :dependencies [ [org.clojure/tools.namespace "0.2.10"]
+                                     [expectations "2.1.0"] ]
                      :source-paths ["dev"] } })

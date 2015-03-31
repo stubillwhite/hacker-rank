@@ -14,9 +14,7 @@
     [clojure.tools.namespace.repl :refer (refresh refresh-all)]
     [clojure.tools.trace :refer (trace-ns untrace-ns)]
     [hacker-rank.system :as system]
-    )
-  (:use
-    [midje.repl]))
+    ))
 
 (def system
   "A Var containing an object representing the application under development."

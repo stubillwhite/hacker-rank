@@ -2,8 +2,7 @@
   (:require
     [clojure.string :refer [join]])
   (:use
-    [clojure.test]
-    [midje.sweet]
+    [expectations]    
     [hacker-rank.utopian-tree]))
 
 (defn- simulate-input
@@ -21,6 +20,5 @@
     (let [cr (System/lineSeparator)]
       (str (join cr args) cr))))
 
-(fact
-  "execute given sample input then expected output."
-  (execute-with-input 3 :enter 0 :enter 1 :enter 4 :enter "exit" :enter) => (output 1 2 7))
+;; Example test cases
+(expect (output 1 2 7) (execute-with-input 3 :enter 0 :enter 1 :enter 4 :enter "exit" :enter))

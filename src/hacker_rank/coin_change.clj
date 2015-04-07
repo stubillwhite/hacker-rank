@@ -93,7 +93,7 @@
 
 (defn- parse-input
   ([args]
-    [ (first  (to-ints (first args)))
+    [ (first (to-ints (first args)))
       (to-ints (fnext args)) ]))
 
 (defn execute

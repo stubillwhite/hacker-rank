@@ -21,10 +21,7 @@
                   [com.taoensso/timbre "3.4.0"]
 
                   ;; Debugging
-                  [org.clojure/tools.trace "0.7.8"]
-                 
-                  ;; Testing
-                  [midje "1.6.3"] ]
+                  [org.clojure/tools.trace "0.7.8"] ]
   
   :profiles { :dev { :dependencies [ [org.clojure/tools.namespace "0.2.10"]
                                      [expectations "2.1.0"] ]

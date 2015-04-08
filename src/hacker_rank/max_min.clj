@@ -1,4 +1,4 @@
-(ns hacker-rank.min-max
+(ns hacker-rank.max-min
   (:require [clojure.string :refer [split]]))
 
 ;; Problem Statement
@@ -50,6 +50,7 @@
 ;; Here K=3; selecting the 3 integers such that K = 10,20,30, unfairness equals
 ;; 
 ;; max(10,20,30) - min(10,20,30) = 30 - 10 = 20
+;;
 ;; Sample Input #01
 ;; 
 ;; 10
@@ -71,8 +72,9 @@
 ;;
 ;; Explanation #01 
 ;; Here K=4; selecting the 4 integers 1,2,3,4, unfairness equals
-;; 
+;;
 ;; max(1,2,3,4) - min(1,2,3,4) = 4 - 1 = 3
+;;
 ;; Sample Input #02
 ;; 
 ;; 6
@@ -103,7 +105,7 @@
   ([s]
     (if (empty? s)
       []
-      (map (fn [x] (Long/valueOf x)) (split s #" ")))))
+      (map (fn [x] (Long/valueOf x)) s))))
 
 (defn- parse-input
   ([args]
@@ -117,4 +119,5 @@
   ([]
     (let [[n k ints] (parse-input (from-stdin))]
       (println (max-min n k ints)))))
+
 

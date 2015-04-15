@@ -91,3 +91,33 @@
 ;;         be the answer here.
 ;; (0, 7): The bike is the only vehicle which can pass through the 2nd segment, which limits the strength of the whole
 ;;         lane to 1.
+
+(defn- from-stdin
+  ([]
+    (line-seq (clojure.java.io/reader *in*))))
+
+(defn- parse-input
+  ([args]
+    (let [ to-int     (fn [x] (Long/valueOf x))
+           split-args (fn [x] (split x #" "))
+           [n-and-t ws & tcs] args
+           [n t]              (map to-int (split-args n-and-t))]
+      [ n
+        t
+        (map to-int (split-args ws))
+        (for [tc tcs] (map to-int (split-args tc))) ])))
+
+(defn- slice
+  ([start end coll]
+    (take (inc (- end start)) (drop start coll))))
+
+(defn service-lane
+  ([n t width-array test-cases]
+    (for [[start end] test-cases]
+      (reduce min (slice start end width-array)))))
+
+(defn execute
+  ([]
+    (doall (map println (apply service-lane (parse-input (from-stdin)))))))
+
+(comment execute)

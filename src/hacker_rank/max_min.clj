@@ -113,11 +113,13 @@
 
 (defn max-min
   ([n k ints]
-    23))
+    (let [ unfairness (fn [xs] (- (reduce max xs) (reduce min xs))) ]
+      (reduce min
+        (map unfairness (partition k 1 (sort ints)))))))
 
 (defn execute
   ([]
-    (let [[n k ints] (parse-input (from-stdin))]
+    (let [[n k & ints] (parse-input (from-stdin))]
       (println (max-min n k ints)))))
 
-
+(comment execute)

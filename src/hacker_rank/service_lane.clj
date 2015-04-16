@@ -100,11 +100,8 @@
   ([args]
     (let [ to-int     (fn [x] (Long/valueOf x))
            split-args (fn [x] (split x #" "))
-           [n-and-t ws & tcs] args
-           [n t]              (map to-int (split-args n-and-t))]
-      [ n
-        t
-        (map to-int (split-args ws))
+           [n-and-t ws & tcs] args ]
+      [ (map to-int (split-args ws))
         (for [tc tcs] (map to-int (split-args tc))) ])))
 
 (defn- slice
@@ -112,7 +109,7 @@
     (take (inc (- end start)) (drop start coll))))
 
 (defn service-lane
-  ([n t width-array test-cases]
+  ([width-array test-cases]
     (for [[start end] test-cases]
       (reduce min (slice start end width-array)))))
 

@@ -13,14 +13,9 @@
              [lein-expectations "0.0.7"]
              [lein-autoexpect "1.4.0"] ]
   
-  :dependencies [
-                  ;; Core
-                  [org.clojure/clojure "1.6.0"]
-                  
-                  ;; Logging
+  :dependencies [ [org.clojure/clojure "1.6.0"]
+                  [org.clojure/math.numeric-tower "0.0.4"]
                   [com.taoensso/timbre "3.4.0"]
-
-                  ;; Debugging
                   [org.clojure/tools.trace "0.7.8"] ]
   
   :profiles { :dev { :dependencies [ [org.clojure/tools.namespace "0.2.10"]

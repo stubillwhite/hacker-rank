@@ -25,9 +25,9 @@
 ;; 
 ;; Constraints 
 ;;
-;; 2≤N≤105 
+;; 2≤N≤10^5 
 ;; 2≤K≤N 
-;; 0≤integer in N ≤109
+;; 0≤integer in N ≤10^9
 ;;
 ;; Sample Input #00
 ;; 
@@ -111,15 +111,35 @@
   ([args]
     (to-ints args)))
 
-(defn max-min
-  ([n k ints]
-    (let [ unfairness (fn [xs] (- (reduce max xs) (reduce min xs))) ]
-      (reduce min
-        (map unfairness (partition k 1 (sort ints)))))))
+(declare max-min)
 
 (defn execute
   ([]
     (let [[n k & ints] (parse-input (from-stdin))]
       (println (max-min n k ints)))))
+
+;; Naive implementation
+
+(defn max-min
+  ([n k ints]
+    (let [ unfairness (fn [xs] (- (last xs) (first xs))) ]
+      (reduce min
+        (map unfairness (partition k 1 (sort ints)))))))
+
+;; That's nice and readable but unfortunately some of the test cases fail due to timeout. This is because for large K,
+;; working out the unfairness takes a long time because although we know the maximum value is the last element, we have
+;; to consume the whole seq to get to it. It'll be faster to just pull out the max and min values as we partition the
+;; sequence.
+
+(defn max-min-seq
+  ([k ints]
+    (let [ sorted-ints (sort ints)
+           maximums    (drop (dec k) sorted-ints) ]
+      (partition 2 (interleave sorted-ints maximums)))))
+
+(defn max-min
+  ([n k ints]
+    (reduce min
+      (map (fn [[x y]] (- y x)) (max-min-seq k ints)))))
 
 (comment execute)

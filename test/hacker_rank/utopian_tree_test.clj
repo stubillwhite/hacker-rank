@@ -6,4 +6,4 @@
              [test-utils :refer [execution-time seconds]]]))
 
 (deftest execute-given-example-input-then-expected-output
-  (is (= (as-output 1 2 7) (apply-to-input execute 3 0 1 4 "exit"))))
+  (is (= (as-output 1 2 7) (apply-to-input execute 3 0 1 4))))

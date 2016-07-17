@@ -1,4 +1,5 @@
-(ns hacker-rank.utopian-tree)
+(ns hacker-rank.utopian-tree
+  (:require [hacker-rank.io :refer [from-stdin]]))
 
 ;; Problem Statement
 ;; 

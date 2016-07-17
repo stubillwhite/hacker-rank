@@ -154,4 +154,4 @@
            solutions (tabulate amount coins) ]
       (get solutions [amount coins]))))
 
-(comment execute)
+(println "FIX THIS COIN CHANGE")

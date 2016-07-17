@@ -1,19 +1,11 @@
-(ns hacker-rank.functional-programming.solve-me-first)
+(ns hacker-rank.functional-programming.solve-me-first
+  (:require [hacker-rank.io :refer [from-stdin]]))
 
-(defn- from-stdin
-  ([]
-    (line-seq (clojure.java.io/reader *in*))))
+(defn- add-integers [a b]
+  (println (+ a b)))
 
-(defn- add-integers
-  ([a b]
-    (println (+ a b))))
+(defn- parse-input [args]
+  (map (fn [x] (Long/valueOf x)) args))
 
-(defn- parse-input
-  ([args]
-    (map (fn [x] (Long/valueOf x)) args)))
-
-(defn execute
-  ([]
-    (doall (apply add-integers (parse-input (from-stdin))))))
-
-;;(execute)
+(defn execute []
+  (doall (apply add-integers (parse-input (from-stdin)))))

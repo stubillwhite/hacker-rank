@@ -1,25 +1,9 @@
 (ns hacker-rank.functional-programming.solve-me-first-test
-  (:require
-    [clojure.string :refer [join]])
-  (:use
-    [expectations]
-    [hacker-rank.functional-programming.solve-me-first]))
+  (:require [clojure.test :refer :all]
+            [hacker-rank.functional-programming.solve-me-first :refer :all]
+            [hacker-rank.io :refer [as-output apply-to-input]]))
 
-(def cr (System/lineSeparator))
+(deftest execute-given-sample-input-then-sample-output
+  (is (= (as-output 5) (apply-to-input execute "2" "3"))))
 
-(defn- simulate-input
-  ([args]
-    (apply str (join cr args) cr)))
-
-(defn- execute-with-input
-  ([& args]
-    (with-out-str
-      (with-in-str (simulate-input args)
-        (execute)))))
-
-(defn- output
-  ([& args]
-    (str (join cr args) cr)))
-
-(expect (output 5) (execute-with-input "2" "3"))
 

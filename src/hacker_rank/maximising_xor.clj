@@ -1,4 +1,5 @@
-(ns hacker-rank.maximising-xor)
+(ns hacker-rank.maximising-xor
+  (:require [hacker-rank.io :refer [from-stdin]]))
 
 ;; Problem Statement
 ;; 
@@ -56,23 +57,16 @@
 ;; I suspect that there's something we can do to get the answer more intelligently by actually counting bits, but with
 ;; these constraints a brute force search is more than fast enough.
 
-(defn- from-stdin
-  ([]
-    (line-seq (clojure.java.io/reader *in*))))
-
 (defn- parse-input
   ([args]
     (map (fn [x] (Long/valueOf x)) args)))
 
-(defn- maximal-xor
-  ([l r]
-    (reduce max 0 (for [ a (range l (inc r))
-                         b (range l a) ]
-                    (bit-xor a b)))))
+(defn- maximal-xor [l r]
+  (reduce max 0 (for [ a (range l (inc r))
+                      b (range l a) ]
+                  (bit-xor a b))))
 
-(defn execute
-  ([]
-    (let [args (parse-input (from-stdin))]
-      (println (apply maximal-xor args)))))
+(defn execute []
+  (let [args (parse-input (from-stdin))]
+    (println (apply maximal-xor args))))
 
-(comment execute)

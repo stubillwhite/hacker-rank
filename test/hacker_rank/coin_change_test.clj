@@ -1,33 +1,15 @@
 (ns hacker-rank.coin-change-test
-  (:require
-    [clojure.string :refer [join]])
-  (:use
-    [expectations]
-    [hacker-rank.coin-change]))
+  (:require [clojure.test :refer :all]
+            [hacker-rank.coin-change :refer :all]
+            [hacker-rank.io :refer [as-output apply-to-input]]))
 
-(def cr (System/lineSeparator))
+(deftest execute-given-zero-coins-then-one-way-to-give-change
+  (is (= (as-output 1) (apply-to-input execute "0 2" "1 2"))))
 
-(defn- simulate-input
-  ([args]
-    (apply str (join cr args) cr)))
+(deftest execute-given-zero-types-then-zero-ways-to-give-change
+  (is (= (as-output 0) (apply-to-input execute "1 0" ""))))
 
-(defn- execute-with-input
-  ([& args]
-    (with-out-str
-      (with-in-str (simulate-input args)
-        (execute)))))
-
-(defn- output
-  ([& args]
-    (str (join cr args) cr)))
-
-;; execute given zero coins then one way to give change
-(expect (output 1) (execute-with-input "0 2" "1 2"))
-
-;; execute given zero types then zero ways to give change
-(expect (output 0) (execute-with-input "1 0" ""))
-
-;; Example test cases
-(expect (output 4) (execute-with-input "4 3"  "1 2 3"))
-(expect (output 5) (execute-with-input "10 4" "2 5 3 6"))
+(deftest execute-given-sample-input-then-sample-output
+  (is (= (as-output 4) (apply-to-input execute "4 3"  "1 2 3")))
+  (is (= (as-output 5) (apply-to-input execute "10 4" "2 5 3 6"))))
 

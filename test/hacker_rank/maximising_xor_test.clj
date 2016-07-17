@@ -1,24 +1,9 @@
 (ns hacker-rank.maximising-xor-test
-  (:require
-    [clojure.string :refer [join]])
-  (:use
-    [expectations]
-    [hacker-rank.maximising-xor]))
+  (:require [clojure.test :refer :all]
+            [hacker-rank
+             [io :refer [apply-to-input apply-to-input-from-file as-output]]
+             [maximising-xor :refer :all]
+             [test-utils :refer [execution-time seconds]]]))
 
-(defn- simulate-input
-  ([args]
-    (apply str (replace {:enter (System/lineSeparator)} args))))
-
-(defn- execute-with-input
-  ([& args]
-    (with-out-str
-      (with-in-str (simulate-input args)
-        (execute)))))
-
-(defn- output
-  ([& args]
-    (let [cr (System/lineSeparator)]
-      (str (join cr args) cr))))
-
-;; Example test cases
-(expect (output 7) (execute-with-input 10 :enter 15 :enter))
+(deftest execute-given-sample-input-then-expected-output
+  (is (= (as-output 7) (apply-to-input execute 10 15))))

@@ -1,5 +1,6 @@
 (ns hacker-rank.max-min
-  (:require [clojure.string :refer [split]]))
+  (:require [clojure.string :refer [split]]
+            [hacker-rank.io :refer [from-stdin]]))
 
 ;; Problem Statement
 ;; 
@@ -97,49 +98,35 @@
 ;; 
 ;; max(100, 101, 102) - min(100, 101, 102) = 102 - 100 = 2
 
-(defn- from-stdin
-  ([]
-    (line-seq (clojure.java.io/reader *in*))))
-
-(defn to-ints
-  ([s]
-    (if (empty? s)
-      []
-      (map (fn [x] (Long/valueOf x)) s))))
-
-(defn- parse-input
-  ([args]
-    (to-ints args)))
+(defn- parse-input [args]
+  (if (empty? args)
+    []
+    (map (fn [x] (Long/valueOf x)) args)))
 
 (declare max-min)
 
-(defn execute
-  ([]
-    (let [[n k & ints] (parse-input (from-stdin))]
-      (println (max-min n k ints)))))
+(defn execute []
+  (let [[n k & ints] (parse-input (from-stdin))]
+    (println (max-min n k ints))))
 
 ;; Naive implementation
 
-(defn max-min
-  ([n k ints]
-    (let [ unfairness (fn [xs] (- (last xs) (first xs))) ]
-      (reduce min
-        (map unfairness (partition k 1 (sort ints)))))))
+(defn max-min [n k ints]
+  (let [unfairness (fn [xs] (- (last xs) (first xs)))]
+    (reduce min
+            (map unfairness (partition k 1 (sort ints))))))
 
 ;; That's nice and readable but unfortunately some of the test cases fail due to timeout. This is because for large K,
 ;; working out the unfairness takes a long time because although we know the maximum value is the last element, we have
 ;; to consume the whole seq to get to it. It'll be faster to just pull out the max and min values as we partition the
 ;; sequence.
 
-(defn max-min-seq
-  ([k ints]
-    (let [ sorted-ints (sort ints)
-           maximums    (drop (dec k) sorted-ints) ]
-      (partition 2 (interleave sorted-ints maximums)))))
+(defn max-min-seq [k ints]
+  (let [sorted-ints (sort ints)
+        maximums    (drop (dec k) sorted-ints)]
+    (partition 2 (interleave sorted-ints maximums))))
 
-(defn max-min
-  ([n k ints]
-    (reduce min
-      (map (fn [[x y]] (- y x)) (max-min-seq k ints)))))
+(defn max-min [n k ints]
+  (reduce min
+          (map (fn [[x y]] (- y x)) (max-min-seq k ints))))
 
-(comment execute)

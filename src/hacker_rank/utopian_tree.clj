@@ -45,27 +45,16 @@
 ;; In the third case (N=4), the tree first doubles its height (2), then grows a meter (3), then doubles again (6),
 ;; before growing another meter; at the end of the 4th cycle, its height is 7 meters.
 
-(defn- from-stdin
-  ([]
-    (take-while
-      (fn [x] (not= x "exit"))
-      (line-seq (clojure.java.io/reader *in*)))))
+(defn- parse-input [args]
+  (map (fn [x] (Long/valueOf x)) (drop 1 args)))
 
-(defn- parse-input
-  ([args]
-    (map (fn [x] (Long/valueOf x)) (drop 1 args))))
+(defn- utopian-tree [n]
+  (loop [ i   0
+         acc 1 ]
+    (if (= i n)
+      acc
+      (recur (inc i) (if (even? i) (+ acc acc) (inc acc))))))
 
-(defn- utopian-tree
-  ([n]
-    (loop [ i   0
-            acc 1 ]
-      (if (= i n)
-        acc
-        (recur (inc i) (if (even? i) (+ acc acc) (inc acc)))))))
-
-(defn execute
-  ([]
-    (doseq [line (parse-input (from-stdin))]
-      (println (utopian-tree line)))))
-
-(comment execute)
+(defn execute []
+  (doseq [line (parse-input (from-stdin))]
+    (println (utopian-tree line))))

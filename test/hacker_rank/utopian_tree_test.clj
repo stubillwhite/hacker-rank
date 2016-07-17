@@ -1,24 +1,9 @@
 (ns hacker-rank.utopian-tree-test
-  (:require
-    [clojure.string :refer [join]])
-  (:use
-    [expectations]    
-    [hacker-rank.utopian-tree]))
+  (:require [clojure.test :refer :all]
+            [hacker-rank
+             [io :refer [apply-to-input apply-to-input-from-file as-output]]
+             [utopian-tree :refer :all]
+             [test-utils :refer [execution-time seconds]]]))
 
-(defn- simulate-input
-  ([args]
-    (apply str (replace {:enter (System/lineSeparator)} args))))
-
-(defn- execute-with-input
-  ([& args]
-    (with-out-str
-      (with-in-str (simulate-input args)
-        (execute)))))
-
-(defn- output
-  ([& args]
-    (let [cr (System/lineSeparator)]
-      (str (join cr args) cr))))
-
-;; Example test cases
-(expect (output 1 2 7) (execute-with-input 3 :enter 0 :enter 1 :enter 4 :enter "exit" :enter))
+(deftest execute-given-example-input-then-expected-output
+  (is (= (as-output 1 2 7) (apply-to-input execute 3 0 1 4 "exit"))))
